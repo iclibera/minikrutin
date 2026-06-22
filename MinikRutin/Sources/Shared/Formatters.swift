@@ -57,7 +57,10 @@ enum Fmt {
         if y > 0 { parts.append("\(y) yıl") }
         if m > 0 { parts.append("\(m) ay") }
         if y == 0 { parts.append("\(max(d, 0)) gün") }
-        return parts.joined(separator: " ") + "lük"
+        let phrase = parts.joined(separator: " ")
+        // Turkish vowel harmony: -lük after "gün", -lık after "ay"/"yıl".
+        let suffix = phrase.hasSuffix("gün") ? "lük" : "lık"
+        return phrase + suffix
     }
 
     // MARK: Durations
