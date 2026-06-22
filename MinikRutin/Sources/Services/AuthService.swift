@@ -29,7 +29,15 @@ enum AuthError: LocalizedError {
             case "INVALID_EMAIL": return "Geçersiz e-posta adresi."
             case "CONFIGURATION_NOT_FOUND":
                 return "Bulut hesabı henüz etkinleştirilmedi. Uygulama yerel modda çalışmaya devam eder."
-            default: return "Bir hata oluştu: \(code)"
+            case "GOOGLE_NOT_CONFIGURED":
+                return "Google girişi henüz etkinleştirilmedi."
+            case "GOOGLE_NO_CODE", "GOOGLE_TOKEN":
+                return "Google girişi tamamlanamadı. Lütfen tekrar deneyin."
+            default:
+                if code.hasPrefix("OPERATION_NOT_ALLOWED") {
+                    return "Bu giriş yöntemi henüz etkinleştirilmedi."
+                }
+                return "Bir hata oluştu: \(code)"
             }
         }
     }
@@ -70,6 +78,55 @@ final class AuthService: ObservableObject {
     func signOut() {
         Keychain.remove(refreshKey)
         user = nil
+    }
+
+    /// Sign in with Apple — exchange the Apple identity token (JWT) for a
+    /// Firebase session. `rawNonce` must match the nonce whose SHA256 was sent
+    /// to Apple in the authorization request.
+    func signInWithApple(idToken: String, rawNonce: String, fullName: String? = nil) async throws {
+        var pairs = [("id_token", idToken), ("providerId", "apple.com"), ("nonce", rawNonce)]
+        if let fullName, !fullName.isEmpty {
+            pairs.append(("user", "{\"name\":{\"firstName\":\"\(fullName)\"}}"))
+        }
+        try await idpAuth(postBody: Self.formBody(pairs))
+    }
+
+    /// Sign in with Google — exchange a Google ID token (and access token) for
+    /// a Firebase session.
+    func signInWithGoogle(idToken: String, accessToken: String?) async throws {
+        var pairs = [("id_token", idToken), ("providerId", "google.com")]
+        if let accessToken, !accessToken.isEmpty { pairs.append(("access_token", accessToken)) }
+        try await idpAuth(postBody: Self.formBody(pairs))
+    }
+
+    /// x-www-form-urlencoded body with every value percent-encoded (unreserved set).
+    static func formBody(_ pairs: [(String, String)]) -> String {
+        let unreserved = CharacterSet(charactersIn: "-._~").union(.alphanumerics)
+        return pairs.map { key, value in
+            "\(key)=\(value.addingPercentEncoding(withAllowedCharacters: unreserved) ?? value)"
+        }.joined(separator: "&")
+    }
+
+    private func idpAuth(postBody: String) async throws {
+        guard FirebaseConfig.isConfigured else { throw AuthError.notConfigured }
+        isBusy = true
+        defer { isBusy = false }
+        let url = URL(string: "\(FirebaseConfig.identityBase):signInWithIdp?key=\(FirebaseConfig.apiKey)")!
+        let json = try await post(url, body: [
+            "postBody": postBody,
+            "requestUri": "https://\(FirebaseConfig.projectID).firebaseapp.com",
+            "returnSecureToken": true,
+        ])
+        guard let idToken = json["idToken"] as? String,
+              let refreshToken = json["refreshToken"] as? String,
+              let uid = json["localId"] as? String else {
+            throw AuthError.server("UNKNOWN")
+        }
+        let email = (json["email"] as? String) ?? ""
+        let expires = Double(json["expiresIn"] as? String ?? "3600") ?? 3600
+        user = AuthUser(uid: uid, email: email, idToken: idToken,
+                        refreshToken: refreshToken, expiresAt: Date().addingTimeInterval(expires))
+        Keychain.set(refreshToken, for: refreshKey)
     }
 
     func sendPasswordReset(email: String) async throws {
@@ -122,7 +179,10 @@ final class AuthService: ObservableObject {
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        req.httpBody = "grant_type=refresh_token&refresh_token=\(refreshToken)".data(using: .utf8)
+        req.httpBody = ("grant_type=refresh_token&refresh_token=" +
+            (refreshToken.addingPercentEncoding(
+                withAllowedCharacters: CharacterSet(charactersIn: "-._~").union(.alphanumerics)) ?? refreshToken)
+            ).data(using: .utf8)
         let json = try await send(req)
         guard let idToken = json["id_token"] as? String,
               let newRefresh = json["refresh_token"] as? String,
