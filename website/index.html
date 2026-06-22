@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MinikRutin — Bebek beslenme, uyku ve sağlık takip uygulaması</title>
+<meta name="description" content="Yeni ebeveynler için sade, reklamsız bebek günlüğü. Beslenme, uyku, bez ve sağlık notları tek yerde; doktora götürülebilir özet rapora dönüşür.">
+<meta property="og:title" content="MinikRutin — Bebek bakım günlüğü">
+<meta property="og:description" content="Bebeğinin gününü, sen yorulmadan takip et. Beslenme, uyku, bez ve doktor raporu tek yerde.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/icon.png">
+<meta name="theme-color" content="#0E211C">
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top" aria-label="MinikRutin">
+    <img src="assets/favicon.png" alt="" class="nav-logo">
+    <span>MinikRutin</span>
+  </a>
+  <a class="nav-cta" href="https://testflight.apple.com/" target="_blank" rel="noopener">TestFlight'ta dene</a>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="aura" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="eyebrow reveal">Bebek bakım günlüğü</p>
+      <h1 class="hero-title">
+        <span class="reveal" style="--d:.05s">Bebeğinin günü,</span>
+        <span class="reveal accent" style="--d:.15s">tek sakin akışta.</span>
+      </h1>
+      <p class="hero-sub reveal" style="--d:.28s">
+        Beslenme, uyku, bez ve sağlık notları birkaç saniyede. Doktora giderken
+        hiçbir detayı unutma.
+      </p>
+      <div class="hero-cta reveal" style="--d:.4s">
+        <a class="btn btn-primary" href="https://testflight.apple.com/" target="_blank" rel="noopener">TestFlight'ta dene</a>
+        <a class="btn btn-ghost" href="#showcase">Nasıl çalışır?</a>
+      </div>
+      <p class="hero-note reveal" style="--d:.5s">Reklamsız · Sade · Veri mahremiyetine duyarlı</p>
+    </div>
+    <a class="scroll-cue" href="#showcase" aria-label="Aşağı kaydır">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- SIGNATURE: pinned phone, dawn → dusk -->
+  <section class="showcase" id="showcase" data-steps="5">
+    <div class="stage">
+      <div class="stage-inner">
+        <div class="stage-copy">
+          <p class="stage-eyebrow">Bir günün ritmi</p>
+          <div class="caps">
+            <div class="cap" data-i="0">
+              <span class="cap-time">Sabah</span>
+              <h2>Tek bakışta bugün.</h2>
+              <p>Son beslenme, son bez, bugünkü uyku ve toplam mama — hepsi ana ekranda.</p>
+            </div>
+            <div class="cap" data-i="1">
+              <span class="cap-time">Gün başlıyor</span>
+              <h2>Tek dokunuş yeter.</h2>
+              <p>Beslenme, uyku, bez, ilaç… uykusuzken bile saniyeler içinde kaydet.</p>
+            </div>
+            <div class="cap" data-i="2">
+              <span class="cap-time">Gündüz</span>
+              <h2>Mama mı, emzirme mi?</h2>
+              <p>Tür, miktar ve saat; aklında tutmak zorunda kalmadan.</p>
+            </div>
+            <div class="cap" data-i="3">
+              <span class="cap-time">Akşamüstü</span>
+              <h2>Haftanın ritmi.</h2>
+              <p>Grafikler ve trendlerle bebeğinin düzenini fark et.</p>
+            </div>
+            <div class="cap" data-i="4">
+              <span class="cap-time">Akşam</span>
+              <h2>Doktora hazır.</h2>
+              <p>Son 7 günü tek sayfalık, paylaşılabilir bir PDF rapora dönüştür.</p>
+            </div>
+          </div>
+        </div>
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen">
+            <img class="shot active" data-i="0" src="assets/01_today.png" alt="">
+            <img class="shot" data-i="1" src="assets/05_quicklog.png" alt="">
+            <img class="shot" data-i="2" src="assets/06_feeding.png" alt="">
+            <img class="shot" data-i="3" src="assets/02_summary.png" alt="">
+            <img class="shot" data-i="4" src="assets/03_report.png" alt="">
+          </div>
+          <div class="phone-notch"></div>
+        </div>
+      </div>
+      <div class="progress"><span id="progressBar"></span></div>
+    </div>
+  </section>
+
+  <!-- DOCTOR REPORT (cinematic dark) -->
+  <section class="panel panel-dark" id="rapor">
+    <div class="panel-grid">
+      <div class="panel-text reveal">
+        <p class="eyebrow eyebrow-light">Farkımız</p>
+        <h2 class="panel-title">Doktora giderken<br>hiçbir detayı unutma.</h2>
+        <p class="panel-body">
+          Dağınık notlar, WhatsApp mesajları ve hafıza yerine; son 7 günün
+          beslenme, uyku, bez, ateş ve ilaç özeti tek bir temiz raporda.
+          Telefonda göster ya da PDF olarak paylaş.
+        </p>
+        <ul class="ticks">
+          <li>Günlük ortalamalar ve toplamlar</li>
+          <li>Ateş ve ilaç geçmişi</li>
+          <li>Tek dokunuşla paylaşım</li>
+        </ul>
+      </div>
+      <div class="panel-shot reveal" style="--d:.12s">
+        <div class="phone phone-static">
+          <div class="phone-screen"><img src="assets/03_report.png" alt="Doktor raporu ekranı"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="ozellikler">
+    <h2 class="section-head reveal">Her şey, sakin bir yerde.</h2>
+    <div class="feature-grid">
+      <article class="feature reveal"><span class="f-ic">○</span><h3>Hızlı kayıt</h3><p>Tek dokunuşla beslenme, uyku, bez, ilaç ve süt sağma.</p></article>
+      <article class="feature reveal" style="--d:.06s"><span class="f-ic">◐</span><h3>Bugün ekranı</h3><p>Son durum ve günün özeti, tek bakışta.</p></article>
+      <article class="feature reveal" style="--d:.12s"><span class="f-ic">◔</span><h3>Haftalık grafikler</h3><p>Uyku ve beslenme trendlerini gör.</p></article>
+      <article class="feature reveal"><span class="f-ic">✦</span><h3>Büyüme & aşı</h3><p>Kilo, boy, baş çevresi; aşı ve kontroller.</p></article>
+      <article class="feature reveal" style="--d:.06s"><span class="f-ic">☾</span><h3>Hatırlatmalar</h3><p>D vitamini, ilaç ve doktor kontrolü.</p></article>
+      <article class="feature reveal" style="--d:.12s"><span class="f-ic">⤳</span><h3>Aile paylaşımı</h3><p>Anne, baba ve bakıcı aynı bebeği takip eder.</p></article>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="panel panel-soft" id="gizlilik">
+    <div class="panel-grid">
+      <div class="panel-text reveal">
+        <p class="eyebrow">Güven</p>
+        <h2 class="panel-title dark">Bebek verisi hassastır.<br>Biz de öyle davranırız.</h2>
+        <p class="panel-body dark">
+          Reklam yok, hassas veriye dayalı hedefleme yok. Verilerin öncelikle
+          cihazında kalır; dilersen dışa aktar ya da tek dokunuşla sil. Zorunlu
+          izin istemeyiz.
+        </p>
+        <p class="fineprint">MinikRutin tıbbi teşhis veya tedavi önerisi vermez. Sağlık kararları için doktorunuza danışın.</p>
+      </div>
+      <div class="panel-aside reveal" style="--d:.12s">
+        <div class="stat"><b>0</b><span>reklam</span></div>
+        <div class="stat"><b>Cihazında</b><span>öncelikli depolama</span></div>
+        <div class="stat"><b>Tek dokunuş</b><span>ile veri silme</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREMIUM -->
+  <section class="premium" id="premium">
+    <div class="premium-inner reveal">
+      <p class="eyebrow eyebrow-light">MinikRutin Premium</p>
+      <h2 class="premium-title">Düzen için, korku için değil.</h2>
+      <p class="premium-sub">Sınırsız PDF doktor raporu, aile paylaşımı, gelişmiş grafikler, bulut yedekleme ve çoklu bebek profili.</p>
+      <div class="premium-price">
+        <div class="price-card"><span class="pc-name">Aylık</span><span class="pc-amt">₺99,99<small>/ay</small></span></div>
+        <div class="price-card featured"><span class="pc-tag">14 gün ücretsiz</span><span class="pc-name">Yıllık</span><span class="pc-amt">₺699,99<small>/yıl</small></span></div>
+      </div>
+      <p class="premium-note">Temel takip her zaman ücretsiz. Aboneliği istediğin an iptal edebilirsin.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta">
+    <div class="aura aura-cta" aria-hidden="true"></div>
+    <div class="cta-inner reveal">
+      <img src="assets/favicon.png" alt="" class="cta-logo">
+      <h2 class="cta-title">Minik bir rutin,<br>büyük bir huzur.</h2>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://testflight.apple.com/" target="_blank" rel="noopener">TestFlight'ta dene</a>
+        <span class="btn btn-soon">App Store'da yakında</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="foot-brand"><img src="assets/favicon.png" alt=""> MinikRutin</div>
+  <nav class="foot-links">
+    <a href="privacy.html">Gizlilik</a>
+    <a href="support.html">Destek</a>
+    <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener">Kullanım Koşulları</a>
+  </nav>
+  <p class="foot-copy">© 2026 Bera Icli · Reklamsız ve sade bebek günlüğü</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
