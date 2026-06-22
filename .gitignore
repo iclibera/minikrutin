@@ -1,0 +1,22 @@
+# Xcode / Swift
+/build/*
+!/build/ExportOptions.plist
+DerivedData/
+*.xcodeproj
+*.xcworkspace
+!default.xcworkspace
+xcuserdata/
+*.xcuserstate
+.swiftpm/
+
+# macOS
+.DS_Store
+
+# Secrets / local
+*.p8
+*.p12
+*.mobileprovision
+build/export/
+
+# Keep
+!build/ExportOptions.plist
