@@ -16,7 +16,15 @@ xcuserdata/
 *.p8
 *.p12
 *.mobileprovision
+*.cer
+*.csr
+*.key
+*.pem
 build/export/
+
+# Playwright / scratch artifacts
+.playwright-mcp/
+asc-*.png
 
 # Keep
 !build/ExportOptions.plist

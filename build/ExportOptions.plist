@@ -7,10 +7,19 @@
     <key>destination</key>
     <string>upload</string>
     <key>teamID</key>
-    <string>UW47H2W9TW</string>
+    <string>2BJ8ADN2G9</string>
     <key>uploadSymbols</key>
     <true/>
     <key>manageAppVersionAndBuildNumber</key>
     <false/>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>signingCertificate</key>
+    <string>Apple Distribution</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.iclibera.minikrutin</key>
+        <string>MinikRutin App Store</string>
+    </dict>
 </dict>
 </plist>
